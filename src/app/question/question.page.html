@@ -1,9 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>question</ion-title>
+    <ion-title>Quiz</ion-title>
+
+    <!-- Buttons to the right of the screen -->
+    <ion-buttons slot="end">
+      <ion-button>Quit</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-progress-bar value="0.5"></ion-progress-bar>
 
+  <h3 class="ion-padding ion-text-center" id="question">
+    {{ question.text }}
+  </h3>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="chosenAnswer">
+
+      <ion-item
+        [disabled]="submitted"
+        *ngFor="let answer of question.answers; let i = index">
+        <ion-label>{{ answer.text }}</ion-label>
+        <ion-radio [value]="i"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-button
+    class="ion-no-margin"
+    expand="full"
+    [disabled]="chosenAnswer == -1"
+    (click)="onSubmitAnswer()">
+  {{ submitted ? "Next" : "Submit" }}
+  </ion-button>
+</ion-footer>
